@@ -1,0 +1,8 @@
+{
+  "blast-testnet": {
+    "RETHStakeManager": {
+      "address": "0x30B16aD242cd93F5f3171Ed7Ac54b957cEbBE7Eb",
+      "startBlock": 3305081
+    }
+  }
+}

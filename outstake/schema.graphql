@@ -1,0 +1,99 @@
+type ClaimMaxGas @entity(immutable: true) {
+  id: Bytes!
+  recipient: Bytes! # address
+  gasAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExtendLockTime @entity(immutable: true) {
+  id: Bytes!
+  positionId: BigInt! # uint256
+  extendDays: BigInt! # uint256
+  mintedREY: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GasManagerTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousGasManager: Bytes! # address
+  newGasManager: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetForceUnstakeFee @entity(immutable: true) {
+  id: Bytes!
+  _forceUnstakeFee: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetMaxLockupDays @entity(immutable: true) {
+  id: Bytes!
+  _maxLockupDays: Int! # uint16
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetMinLockupDays @entity(immutable: true) {
+  id: Bytes!
+  _minLockupDays: Int! # uint16
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetOutETHVault @entity(immutable: true) {
+  id: Bytes!
+  _outETHVault: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type StakeRETH @entity(immutable: true) {
+  id: Bytes!
+  _positionId: BigInt! # uint256
+  _account: Bytes! # address
+  _amountInRETH: BigInt! # uint256
+  _deadline: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unstake @entity(immutable: true) {
+  id: Bytes!
+  _positionId: BigInt! # uint256
+  _account: Bytes! # address
+  _amountInRETH: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WithdrawYield @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  amountInREY: BigInt! # uint256
+  yieldAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
