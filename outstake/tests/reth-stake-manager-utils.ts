@@ -12,7 +12,7 @@ import {
   StakeRETH,
   Unstake,
   WithdrawYield
-} from "../generated/OutStake/OutStake"
+} from "../generated/RETHStakeManager/RETHStakeManager"
 
 export function createClaimMaxGasEvent(
   recipient: Address,

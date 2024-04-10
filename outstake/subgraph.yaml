@@ -5,11 +5,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: OutStake
+    name: RETHStakeManager
     network: blast-testnet
     source:
       address: "0xEc328C1732a9b16ee4095e06Da2ae09E72E8c9E6"
-      abi: OutStake
+      abi: RETHStakeManager
       startBlock: 3942068
     mapping:
       kind: ethereum/events
@@ -28,8 +28,8 @@ dataSources:
         - Unstake
         - WithdrawYield
       abis:
-        - name: OutStake
-          file: ./abis/OutStake.json
+        - name: RETHStakeManager
+          file: ./abis/RETHStakeManager.json
       eventHandlers:
         - event: ClaimMaxGas(indexed address,uint256)
           handler: handleClaimMaxGas
@@ -53,4 +53,4 @@ dataSources:
           handler: handleUnstake
         - event: WithdrawYield(indexed address,uint256,uint256)
           handler: handleWithdrawYield
-      file: ./src/out-stake.ts
+      file: ./src/reth-stake-manager.ts

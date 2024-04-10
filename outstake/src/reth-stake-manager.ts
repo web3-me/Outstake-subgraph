@@ -10,7 +10,7 @@ import {
   StakeRETH as StakeRETHEvent,
   Unstake as UnstakeEvent,
   WithdrawYield as WithdrawYieldEvent
-} from "../generated/OutStake/OutStake"
+} from "../generated/RETHStakeManager/RETHStakeManager"
 import {
   ClaimMaxGas,
   ExtendLockTime,
