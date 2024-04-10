@@ -8,9 +8,9 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { ClaimMaxGas } from "../generated/schema"
-import { ClaimMaxGas as ClaimMaxGasEvent } from "../generated/RETHStakeManager/RETHStakeManager"
-import { handleClaimMaxGas } from "../src/reth-stake-manager"
-import { createClaimMaxGasEvent } from "./reth-stake-manager-utils"
+import { ClaimMaxGas as ClaimMaxGasEvent } from "../generated/OutStake/OutStake"
+import { handleClaimMaxGas } from "../src/out-stake"
+import { createClaimMaxGasEvent } from "./out-stake-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0

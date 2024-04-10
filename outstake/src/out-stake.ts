@@ -10,7 +10,7 @@ import {
   StakeRETH as StakeRETHEvent,
   Unstake as UnstakeEvent,
   WithdrawYield as WithdrawYieldEvent
-} from "../generated/RETHStakeManager/RETHStakeManager"
+} from "../generated/OutStake/OutStake"
 import {
   ClaimMaxGas,
   ExtendLockTime,
@@ -45,6 +45,7 @@ export function handleExtendLockTime(event: ExtendLockTimeEvent): void {
   )
   entity.positionId = event.params.positionId
   entity.extendDays = event.params.extendDays
+  entity.newDeadLine = event.params.newDeadLine
   entity.mintedREY = event.params.mintedREY
 
   entity.blockNumber = event.block.number
@@ -90,7 +91,7 @@ export function handleSetForceUnstakeFee(event: SetForceUnstakeFeeEvent): void {
   let entity = new SetForceUnstakeFee(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._forceUnstakeFee = event.params._forceUnstakeFee
+  entity.forceUnstakeFee = event.params.forceUnstakeFee
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -103,7 +104,7 @@ export function handleSetMaxLockupDays(event: SetMaxLockupDaysEvent): void {
   let entity = new SetMaxLockupDays(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._maxLockupDays = event.params._maxLockupDays
+  entity.maxLockupDays = event.params.maxLockupDays
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -116,7 +117,7 @@ export function handleSetMinLockupDays(event: SetMinLockupDaysEvent): void {
   let entity = new SetMinLockupDays(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._minLockupDays = event.params._minLockupDays
+  entity.minLockupDays = event.params.minLockupDays
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -129,7 +130,7 @@ export function handleSetOutETHVault(event: SetOutETHVaultEvent): void {
   let entity = new SetOutETHVault(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._outETHVault = event.params._outETHVault
+  entity.outETHVault = event.params.outETHVault
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -142,10 +143,12 @@ export function handleStakeRETH(event: StakeRETHEvent): void {
   let entity = new StakeRETH(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._positionId = event.params._positionId
-  entity._account = event.params._account
-  entity._amountInRETH = event.params._amountInRETH
-  entity._deadline = event.params._deadline
+  entity.positionId = event.params.positionId
+  entity.account = event.params.account
+  entity.amountInRETH = event.params.amountInRETH
+  entity.amountInPETH = event.params.amountInPETH
+  entity.amountInREY = event.params.amountInREY
+  entity.deadline = event.params.deadline
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -158,9 +161,10 @@ export function handleUnstake(event: UnstakeEvent): void {
   let entity = new Unstake(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._positionId = event.params._positionId
-  entity._account = event.params._account
-  entity._amountInRETH = event.params._amountInRETH
+  entity.positionId = event.params.positionId
+  entity.amountInRETH = event.params.amountInRETH
+  entity.burnedPETH = event.params.burnedPETH
+  entity.burnedREY = event.params.burnedREY
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
@@ -173,8 +177,8 @@ export function handleWithdrawYield(event: WithdrawYieldEvent): void {
   let entity = new WithdrawYield(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.user = event.params.user
-  entity.amountInREY = event.params.amountInREY
+  entity.account = event.params.account
+  entity.burnedREY = event.params.burnedREY
   entity.yieldAmount = event.params.yieldAmount
 
   entity.blockNumber = event.block.number

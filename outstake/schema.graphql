@@ -11,6 +11,7 @@ type ExtendLockTime @entity(immutable: true) {
   id: Bytes!
   positionId: BigInt! # uint256
   extendDays: BigInt! # uint256
+  newDeadLine: BigInt! # uint256
   mintedREY: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -37,7 +38,7 @@ type OwnershipTransferred @entity(immutable: true) {
 
 type SetForceUnstakeFee @entity(immutable: true) {
   id: Bytes!
-  _forceUnstakeFee: BigInt! # uint256
+  forceUnstakeFee: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -45,7 +46,7 @@ type SetForceUnstakeFee @entity(immutable: true) {
 
 type SetMaxLockupDays @entity(immutable: true) {
   id: Bytes!
-  _maxLockupDays: Int! # uint16
+  maxLockupDays: Int! # uint16
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -53,7 +54,7 @@ type SetMaxLockupDays @entity(immutable: true) {
 
 type SetMinLockupDays @entity(immutable: true) {
   id: Bytes!
-  _minLockupDays: Int! # uint16
+  minLockupDays: Int! # uint16
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -61,7 +62,7 @@ type SetMinLockupDays @entity(immutable: true) {
 
 type SetOutETHVault @entity(immutable: true) {
   id: Bytes!
-  _outETHVault: Bytes! # address
+  outETHVault: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -69,10 +70,12 @@ type SetOutETHVault @entity(immutable: true) {
 
 type StakeRETH @entity(immutable: true) {
   id: Bytes!
-  _positionId: BigInt! # uint256
-  _account: Bytes! # address
-  _amountInRETH: BigInt! # uint256
-  _deadline: BigInt! # uint256
+  positionId: BigInt! # uint256
+  account: Bytes! # address
+  amountInRETH: BigInt! # uint256
+  amountInPETH: BigInt! # uint256
+  amountInREY: BigInt! # uint256
+  deadline: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -80,9 +83,10 @@ type StakeRETH @entity(immutable: true) {
 
 type Unstake @entity(immutable: true) {
   id: Bytes!
-  _positionId: BigInt! # uint256
-  _account: Bytes! # address
-  _amountInRETH: BigInt! # uint256
+  positionId: BigInt! # uint256
+  amountInRETH: BigInt! # uint256
+  burnedPETH: BigInt! # uint256
+  burnedREY: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -90,8 +94,8 @@ type Unstake @entity(immutable: true) {
 
 type WithdrawYield @entity(immutable: true) {
   id: Bytes!
-  user: Bytes! # address
-  amountInREY: BigInt! # uint256
+  account: Bytes! # address
+  burnedREY: BigInt! # uint256
   yieldAmount: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!

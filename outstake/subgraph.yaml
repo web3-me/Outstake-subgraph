@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: RETHStakeManager
+    name: OutStake
     network: blast-testnet
     source:
-      address: "0x30B16aD242cd93F5f3171Ed7Ac54b957cEbBE7Eb"
-      abi: RETHStakeManager
-      startBlock: 3305081
+      address: "0xEc328C1732a9b16ee4095e06Da2ae09E72E8c9E6"
+      abi: OutStake
+      startBlock: 3942068
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -28,12 +28,12 @@ dataSources:
         - Unstake
         - WithdrawYield
       abis:
-        - name: RETHStakeManager
-          file: ./abis/RETHStakeManager.json
+        - name: OutStake
+          file: ./abis/OutStake.json
       eventHandlers:
         - event: ClaimMaxGas(indexed address,uint256)
           handler: handleClaimMaxGas
-        - event: ExtendLockTime(indexed uint256,uint256,uint256)
+        - event: ExtendLockTime(indexed uint256,uint256,uint256,uint256)
           handler: handleExtendLockTime
         - event: GasManagerTransferred(indexed address,indexed address)
           handler: handleGasManagerTransferred
@@ -47,10 +47,10 @@ dataSources:
           handler: handleSetMinLockupDays
         - event: SetOutETHVault(address)
           handler: handleSetOutETHVault
-        - event: StakeRETH(indexed uint256,indexed address,uint256,uint256)
+        - event: StakeRETH(indexed uint256,indexed address,uint256,uint256,uint256,uint256)
           handler: handleStakeRETH
-        - event: Unstake(indexed uint256,indexed address,uint256)
+        - event: Unstake(indexed uint256,uint256,uint256,uint256)
           handler: handleUnstake
         - event: WithdrawYield(indexed address,uint256,uint256)
           handler: handleWithdrawYield
-      file: ./src/reth-stake-manager.ts
+      file: ./src/out-stake.ts

@@ -12,7 +12,7 @@ import {
   StakeRETH,
   Unstake,
   WithdrawYield
-} from "../generated/RETHStakeManager/RETHStakeManager"
+} from "../generated/OutStake/OutStake"
 
 export function createClaimMaxGasEvent(
   recipient: Address,
@@ -38,6 +38,7 @@ export function createClaimMaxGasEvent(
 export function createExtendLockTimeEvent(
   positionId: BigInt,
   extendDays: BigInt,
+  newDeadLine: BigInt,
   mintedREY: BigInt
 ): ExtendLockTime {
   let extendLockTimeEvent = changetype<ExtendLockTime>(newMockEvent())
@@ -54,6 +55,12 @@ export function createExtendLockTimeEvent(
     new ethereum.EventParam(
       "extendDays",
       ethereum.Value.fromUnsignedBigInt(extendDays)
+    )
+  )
+  extendLockTimeEvent.parameters.push(
+    new ethereum.EventParam(
+      "newDeadLine",
+      ethereum.Value.fromUnsignedBigInt(newDeadLine)
     )
   )
   extendLockTimeEvent.parameters.push(
@@ -116,7 +123,7 @@ export function createOwnershipTransferredEvent(
 }
 
 export function createSetForceUnstakeFeeEvent(
-  _forceUnstakeFee: BigInt
+  forceUnstakeFee: BigInt
 ): SetForceUnstakeFee {
   let setForceUnstakeFeeEvent = changetype<SetForceUnstakeFee>(newMockEvent())
 
@@ -124,8 +131,8 @@ export function createSetForceUnstakeFeeEvent(
 
   setForceUnstakeFeeEvent.parameters.push(
     new ethereum.EventParam(
-      "_forceUnstakeFee",
-      ethereum.Value.fromUnsignedBigInt(_forceUnstakeFee)
+      "forceUnstakeFee",
+      ethereum.Value.fromUnsignedBigInt(forceUnstakeFee)
     )
   )
 
@@ -133,7 +140,7 @@ export function createSetForceUnstakeFeeEvent(
 }
 
 export function createSetMaxLockupDaysEvent(
-  _maxLockupDays: i32
+  maxLockupDays: i32
 ): SetMaxLockupDays {
   let setMaxLockupDaysEvent = changetype<SetMaxLockupDays>(newMockEvent())
 
@@ -141,8 +148,8 @@ export function createSetMaxLockupDaysEvent(
 
   setMaxLockupDaysEvent.parameters.push(
     new ethereum.EventParam(
-      "_maxLockupDays",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_maxLockupDays))
+      "maxLockupDays",
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(maxLockupDays))
     )
   )
 
@@ -150,7 +157,7 @@ export function createSetMaxLockupDaysEvent(
 }
 
 export function createSetMinLockupDaysEvent(
-  _minLockupDays: i32
+  minLockupDays: i32
 ): SetMinLockupDays {
   let setMinLockupDaysEvent = changetype<SetMinLockupDays>(newMockEvent())
 
@@ -158,8 +165,8 @@ export function createSetMinLockupDaysEvent(
 
   setMinLockupDaysEvent.parameters.push(
     new ethereum.EventParam(
-      "_minLockupDays",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_minLockupDays))
+      "minLockupDays",
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(minLockupDays))
     )
   )
 
@@ -167,7 +174,7 @@ export function createSetMinLockupDaysEvent(
 }
 
 export function createSetOutETHVaultEvent(
-  _outETHVault: Address
+  outETHVault: Address
 ): SetOutETHVault {
   let setOutEthVaultEvent = changetype<SetOutETHVault>(newMockEvent())
 
@@ -175,8 +182,8 @@ export function createSetOutETHVaultEvent(
 
   setOutEthVaultEvent.parameters.push(
     new ethereum.EventParam(
-      "_outETHVault",
-      ethereum.Value.fromAddress(_outETHVault)
+      "outETHVault",
+      ethereum.Value.fromAddress(outETHVault)
     )
   )
 
@@ -184,10 +191,12 @@ export function createSetOutETHVaultEvent(
 }
 
 export function createStakeRETHEvent(
-  _positionId: BigInt,
-  _account: Address,
-  _amountInRETH: BigInt,
-  _deadline: BigInt
+  positionId: BigInt,
+  account: Address,
+  amountInRETH: BigInt,
+  amountInPETH: BigInt,
+  amountInREY: BigInt,
+  deadline: BigInt
 ): StakeRETH {
   let stakeRethEvent = changetype<StakeRETH>(newMockEvent())
 
@@ -195,23 +204,35 @@ export function createStakeRETHEvent(
 
   stakeRethEvent.parameters.push(
     new ethereum.EventParam(
-      "_positionId",
-      ethereum.Value.fromUnsignedBigInt(_positionId)
+      "positionId",
+      ethereum.Value.fromUnsignedBigInt(positionId)
     )
   )
   stakeRethEvent.parameters.push(
-    new ethereum.EventParam("_account", ethereum.Value.fromAddress(_account))
+    new ethereum.EventParam("account", ethereum.Value.fromAddress(account))
   )
   stakeRethEvent.parameters.push(
     new ethereum.EventParam(
-      "_amountInRETH",
-      ethereum.Value.fromUnsignedBigInt(_amountInRETH)
+      "amountInRETH",
+      ethereum.Value.fromUnsignedBigInt(amountInRETH)
     )
   )
   stakeRethEvent.parameters.push(
     new ethereum.EventParam(
-      "_deadline",
-      ethereum.Value.fromUnsignedBigInt(_deadline)
+      "amountInPETH",
+      ethereum.Value.fromUnsignedBigInt(amountInPETH)
+    )
+  )
+  stakeRethEvent.parameters.push(
+    new ethereum.EventParam(
+      "amountInREY",
+      ethereum.Value.fromUnsignedBigInt(amountInREY)
+    )
+  )
+  stakeRethEvent.parameters.push(
+    new ethereum.EventParam(
+      "deadline",
+      ethereum.Value.fromUnsignedBigInt(deadline)
     )
   )
 
@@ -219,9 +240,10 @@ export function createStakeRETHEvent(
 }
 
 export function createUnstakeEvent(
-  _positionId: BigInt,
-  _account: Address,
-  _amountInRETH: BigInt
+  positionId: BigInt,
+  amountInRETH: BigInt,
+  burnedPETH: BigInt,
+  burnedREY: BigInt
 ): Unstake {
   let unstakeEvent = changetype<Unstake>(newMockEvent())
 
@@ -229,17 +251,26 @@ export function createUnstakeEvent(
 
   unstakeEvent.parameters.push(
     new ethereum.EventParam(
-      "_positionId",
-      ethereum.Value.fromUnsignedBigInt(_positionId)
+      "positionId",
+      ethereum.Value.fromUnsignedBigInt(positionId)
     )
   )
   unstakeEvent.parameters.push(
-    new ethereum.EventParam("_account", ethereum.Value.fromAddress(_account))
+    new ethereum.EventParam(
+      "amountInRETH",
+      ethereum.Value.fromUnsignedBigInt(amountInRETH)
+    )
   )
   unstakeEvent.parameters.push(
     new ethereum.EventParam(
-      "_amountInRETH",
-      ethereum.Value.fromUnsignedBigInt(_amountInRETH)
+      "burnedPETH",
+      ethereum.Value.fromUnsignedBigInt(burnedPETH)
+    )
+  )
+  unstakeEvent.parameters.push(
+    new ethereum.EventParam(
+      "burnedREY",
+      ethereum.Value.fromUnsignedBigInt(burnedREY)
     )
   )
 
@@ -247,8 +278,8 @@ export function createUnstakeEvent(
 }
 
 export function createWithdrawYieldEvent(
-  user: Address,
-  amountInREY: BigInt,
+  account: Address,
+  burnedREY: BigInt,
   yieldAmount: BigInt
 ): WithdrawYield {
   let withdrawYieldEvent = changetype<WithdrawYield>(newMockEvent())
@@ -256,12 +287,12 @@ export function createWithdrawYieldEvent(
   withdrawYieldEvent.parameters = new Array()
 
   withdrawYieldEvent.parameters.push(
-    new ethereum.EventParam("user", ethereum.Value.fromAddress(user))
+    new ethereum.EventParam("account", ethereum.Value.fromAddress(account))
   )
   withdrawYieldEvent.parameters.push(
     new ethereum.EventParam(
-      "amountInREY",
-      ethereum.Value.fromUnsignedBigInt(amountInREY)
+      "burnedREY",
+      ethereum.Value.fromUnsignedBigInt(burnedREY)
     )
   )
   withdrawYieldEvent.parameters.push(
