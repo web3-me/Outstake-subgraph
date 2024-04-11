@@ -16,6 +16,7 @@ import {
   ExtendLockTime,
   GasManagerTransferred,
   OwnershipTransferred,
+  Position,
   SetForceUnstakeFee,
   SetMaxLockupDays,
   SetMinLockupDays,
@@ -43,6 +44,7 @@ export function handleExtendLockTime(event: ExtendLockTimeEvent): void {
   let entity = new ExtendLockTime(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+  entity.extendPostion = event.params.positionId.toString()
   entity.positionId = event.params.positionId
   entity.extendDays = event.params.extendDays
   entity.newDeadLine = event.params.newDeadLine
@@ -140,10 +142,14 @@ export function handleSetOutETHVault(event: SetOutETHVaultEvent): void {
 }
 
 export function handleStakeRETH(event: StakeRETHEvent): void {
-  let entity = new StakeRETH(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.positionId = event.params.positionId
+  const positionId = event.params.positionId
+  let entity = new StakeRETH(positionId.toString())
+
+  const position = new Position(positionId.toString())
+  position.save()
+
+  entity.stakePosition = positionId.toString()
+  entity.positionId = positionId
   entity.account = event.params.account
   entity.amountInRETH = event.params.amountInRETH
   entity.amountInPETH = event.params.amountInPETH

@@ -2,7 +2,7 @@ specVersion: 1.0.0
 indexerHints:
   prune: auto
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: RETHStakeManager
@@ -30,7 +30,7 @@ dataSources:
         - Position
       abis:
         - name: RETHStakeManager
-          file: ./abis/RETHStakeManager.json
+          file: RETHStakeManager/abis/RETHStakeManager.json
       eventHandlers:
         - event: ClaimMaxGas(indexed address,uint256)
           handler: handleClaimMaxGas
@@ -54,4 +54,4 @@ dataSources:
           handler: handleUnstake
         - event: WithdrawYield(indexed address,uint256,uint256)
           handler: handleWithdrawYield
-      file: ./src/reth-stake-manager.ts
+      file: RETHStakeManager/RETHStakeManager.wasm
