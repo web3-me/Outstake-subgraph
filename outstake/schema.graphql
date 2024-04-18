@@ -7,18 +7,6 @@ type ClaimMaxGas @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type ExtendLockTime @entity(immutable: true) {
-  id: Bytes!
-  positionId: BigInt!
-  extendPostion: Position
-  extendDays: BigInt! # uint256
-  newDeadLine: BigInt! # uint256
-  mintedREY: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type GasManagerTransferred @entity(immutable: true) {
   id: Bytes!
   previousGasManager: Bytes! # address
@@ -69,10 +57,23 @@ type SetOutETHVault @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type StakeRETH @entity(immutable: true) {
-  id: String!
-  stakePosition: Position!
+type ExtendLockTime @entity(immutable: true) {
+  id: Bytes!
   positionId: BigInt!
+  # extendPostion: StakeRETH
+  extendDays: BigInt! # uint256
+  newDeadLine: BigInt! # uint256
+  mintedREY: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type StakeRETH @entity(immutable: false) {
+  id: String!
+  positionId: BigInt!
+  # extendDays: [ExtendLockTime!]! @derivedFrom(field: "extendPostion")
+  newDeadLine: BigInt # uint256
   account: Bytes! # address
   amountInRETH: BigInt! # uint256
   amountInPETH: BigInt! # uint256
@@ -102,10 +103,4 @@ type WithdrawYield @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-}
-
-type Position @entity(immutable: true) {
-  id: String!
-  stake: [StakeRETH!]! @derivedFrom(field: "stakePosition")
-  extendLockTime: [ExtendLockTime!]! @derivedFrom(field: "extendPostion")
 }
